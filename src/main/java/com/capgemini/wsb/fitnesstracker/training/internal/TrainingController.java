@@ -11,10 +11,4 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/training")
 public class TrainingController {
-    private final TrainingProvider trainingProvider;
-    private final TrainingMapper trainingMapper;
-    @GetMapping
-    public List<TrainingTO> getTrainings(){
-        return trainingProvider.getTrainings().stream().map()
-    }
 }

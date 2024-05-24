@@ -5,6 +5,7 @@ import com.capgemini.wsb.fitnesstracker.user.api.UserDto;
 import org.springframework.stereotype.Component;
 
 @Component
+public
 class UserMapper {
 
     UserDto toDto(User user) {

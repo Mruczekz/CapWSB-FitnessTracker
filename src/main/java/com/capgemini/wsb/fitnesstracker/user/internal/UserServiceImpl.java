@@ -41,4 +41,23 @@ class UserServiceImpl implements UserService, UserProvider {
         return userRepository.findAll();
     }
 
+    @Override
+    public Optional<User> deleteUser(long id) {
+        return userRepository.findById(id).map(user -> {
+            userRepository.deleteById(id);
+            return user;
+        });
+    }
+
+    @Override
+    public List<User> findByEmailContaining(String query) {
+        return userRepository.findByEmailContainingIgnoreCase(query);
+    }
+
+    @Override
+    public List<User> findByAgeGreaterThan(long maxAge) {
+        return userRepository.findByAgeGreaterThan(maxAge);
+    }
+
+
 }

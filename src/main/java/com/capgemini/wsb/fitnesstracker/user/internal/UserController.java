@@ -51,12 +51,12 @@ class UserController {
         return userService.deleteUser(id).map(userMapper::toDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/emailinfo")
+    @GetMapping("/emailInfo")
     public List<UserEmailInfoView> getAllUsersByEmailContaining(@RequestParam String query){
         return userService.findByEmailContaining(query).stream().map(userEmailInfoMapper::toDto).toList();
     }
 
-    @GetMapping("/maxage")
+    @GetMapping("/maxAge")
     public List<UserDto> getAllUsersWithAgeGreaterThan(@RequestParam long maxAge){
         return userService.findByAgeGreaterThan(maxAge).stream().map(userMapper::toDto).toList();
     }

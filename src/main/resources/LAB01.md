@@ -17,7 +17,6 @@ Jako użytkownik systemu, chcę mieć możliwość zarządzania użytkownikami s
 - móc wprowadzać nowych użytkowników do systemu
 - móc usuwać użytkowników z systemu
 - móc aktualizować użytkowników
--
 
 ### Wymagania funkcjonalne
 
@@ -32,7 +31,7 @@ Stworzone API powinno pozwalać na:
   tylko
   ID oraz e-mail użytkowników)
 - [x] wyszukiwanie użytkowników po wieku starszym niż zdefiniowany
-- [ ] aktualizowanie użytkowników w systemie (dowolnie wybrany atrybut)
+- [x] aktualizowanie użytkowników w systemie (dowolnie wybrany atrybut)
 
 ### Wymagania techniczne
 

@@ -1,14 +1,13 @@
 package com.capgemini.wsb.fitnesstracker.user.internal;
 
-import com.capgemini.wsb.fitnesstracker.user.api.User;
-import com.capgemini.wsb.fitnesstracker.user.api.UserDto;
-import com.capgemini.wsb.fitnesstracker.user.api.UserEmailInfoView;
-import com.capgemini.wsb.fitnesstracker.user.api.UserSimpleView;
+import com.capgemini.wsb.fitnesstracker.user.api.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -31,14 +30,9 @@ class UserController {
                           .toList();
     }
 
-    @PostMapping
-    public User addUser(@RequestBody UserDto userDto) throws InterruptedException {
-
-        // Demonstracja how to use @RequestBody
-        System.out.println("User with e-mail: " + userDto.email() + "passed to the request");
-
-        // TODO: saveUser with Service and return User
-        return null;
+    @PostMapping()
+    public ResponseEntity<User> addUser(@RequestBody UserDto userDto){
+        return new ResponseEntity<>(userService.createUser(userMapper.toEntity(userDto)), CREATED);
     }
 
     @GetMapping("/simple")
@@ -59,5 +53,10 @@ class UserController {
     @GetMapping("/maxAge")
     public List<UserDto> getAllUsersWithAgeGreaterThan(@RequestParam long maxAge){
         return userService.findByAgeGreaterThan(maxAge).stream().map(userMapper::toDto).toList();
+    }
+
+    @PutMapping("/userUpdateInfo")
+    public ResponseEntity<User> updateUserEmail(@RequestBody UserUpdateInfo userUpdateInfo){
+        return userService.updateUserEmail(userUpdateInfo.id(), userUpdateInfo.email()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }

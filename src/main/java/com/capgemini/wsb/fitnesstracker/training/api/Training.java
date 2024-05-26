@@ -3,16 +3,16 @@ package com.capgemini.wsb.fitnesstracker.training.api;
 import com.capgemini.wsb.fitnesstracker.training.internal.ActivityType;
 import com.capgemini.wsb.fitnesstracker.user.api.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
 @Entity
 @Table(name = "trainings")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @ToString
 public class Training {
 
@@ -22,6 +22,7 @@ public class Training {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private User user;
 
     @Column(name = "start_time", nullable = false)
@@ -48,6 +49,14 @@ public class Training {
             final double distance,
             final double averageSpeed) {
         this.user = user;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.activityType = activityType;
+        this.distance = distance;
+        this.averageSpeed = averageSpeed;
+    }
+
+    public Training(Date startTime, Date endTime, ActivityType activityType, double distance, double averageSpeed) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.activityType = activityType;

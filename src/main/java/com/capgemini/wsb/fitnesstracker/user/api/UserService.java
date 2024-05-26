@@ -18,4 +18,5 @@ public interface UserService {
     List<User> findByEmailContaining(String query);
 
     List<User> findByAgeGreaterThan(long maxAge);
+    Optional<User> updateUserEmail(long id, String newEmail);
 }

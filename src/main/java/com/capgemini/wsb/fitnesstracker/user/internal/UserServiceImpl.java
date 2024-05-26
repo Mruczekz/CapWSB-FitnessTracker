@@ -59,5 +59,11 @@ class UserServiceImpl implements UserService, UserProvider {
         return userRepository.findByAgeGreaterThan(maxAge);
     }
 
-
+    @Override
+    public Optional<User> updateUserEmail(long id, String newEmail) {
+        return userRepository.findById(id).map(user -> {
+            user.setEmail(newEmail);
+            return user;
+        }).map(userRepository::save);
+    }
 }

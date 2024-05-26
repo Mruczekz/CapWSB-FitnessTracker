@@ -1,6 +1,5 @@
 package com.capgemini.wsb.fitnesstracker.training.api;
 
-import com.capgemini.wsb.fitnesstracker.training.internal.TrainingTO;
 import com.capgemini.wsb.fitnesstracker.user.api.User;
 
 import java.util.List;
@@ -19,4 +18,5 @@ public interface TrainingProvider {
 
     List<Training> getTrainings();
 
+    List<Training> getUserTrainings(Long userId);
 }

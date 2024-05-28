@@ -34,7 +34,7 @@ public class TrainingMapper {
 
     Training toEntityUpdate(TrainingIdTO trainingTO) {
         return new Training (trainingTO.getId(),
-                userMapper.toEntitySave(userMapper.toDto(userProvider.getUser(trainingTO.getUserId()).get())),
+                userProvider.getUser(trainingTO.getUserId()).get(),
                 trainingTO.getStartTime(),
                 trainingTO.getEndTime(),
                 trainingTO.getActivityType(),

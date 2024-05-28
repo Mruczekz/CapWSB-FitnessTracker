@@ -47,11 +47,10 @@ public class TrainingController {
         return trainingRepository.findByActivityType(activityType).stream().map(trainingMapper::toTraining).collect(Collectors.toList());
     }
 
-    @PutMapping("/{trainingId")
+    @PutMapping("/{trainingId}")
     public TrainingTO updateTraining(@PathVariable Long trainingId, @RequestBody TrainingIdTO trainingIdTO){
         Training training = trainingMapper.toEntityUpdate(trainingIdTO);
-        training.setId(trainingId);
-        trainingRepository.save(training);
-        return trainingMapper.toTraining(training);
+        final Training savedTraining = trainingRepository.save(training);
+        return trainingMapper.toTraining(savedTraining);
     }
 }

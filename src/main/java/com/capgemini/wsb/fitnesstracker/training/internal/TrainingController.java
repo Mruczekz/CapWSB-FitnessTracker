@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/v1/training")
+@RequestMapping("/v1/trainings")
 @RequiredArgsConstructor
 public class TrainingController {
     private final TrainingProvider trainingProvider;
@@ -50,6 +50,7 @@ public class TrainingController {
     @PutMapping("/{trainingId}")
     public TrainingTO updateTraining(@PathVariable Long trainingId, @RequestBody TrainingIdTO trainingIdTO){
         Training training = trainingMapper.toEntityUpdate(trainingIdTO);
+        training.setId(trainingId);
         final Training savedTraining = trainingRepository.save(training);
         return trainingMapper.toTraining(savedTraining);
     }

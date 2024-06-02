@@ -1,13 +1,17 @@
 package com.capgemini.wsb.fitnesstracker.mail.api;
 
+import com.capgemini.wsb.fitnesstracker.training.api.Training;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * API interface for component responsible for sending emails.
  */
 @Component
-public interface EmailSender extends JavaMailSender {
+public interface EmailSender{
 
     /**
      * Sends the email message to the recipient from the provided {@link EmailDto}.
@@ -16,4 +20,5 @@ public interface EmailSender extends JavaMailSender {
      */
     void send(EmailDto email);
 
+    void handleReportEmail(final String user, final List<Training> trainingList);
 }

@@ -60,10 +60,8 @@ class UserServiceImpl implements UserService, UserProvider {
     }
 
     @Override
-    public Optional<User> updateUserEmail(long id, String newEmail) {
-        return userRepository.findById(id).map(user -> {
-            user.setEmail(newEmail);
-            return user;
-        }).map(userRepository::save);
+    public User updateUser(Long userId, User user) {
+        user.setId(userId);
+        return userRepository.save(user);
     }
 }

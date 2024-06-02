@@ -16,6 +16,6 @@ public class TrainingIdTO {
     private Date startTime;
     private Date endTime;
     private ActivityType activityType;
-    private  Double distance;
+    private Double distance;
     private Double averageSpeed;
 }

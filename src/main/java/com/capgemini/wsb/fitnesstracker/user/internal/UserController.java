@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -35,19 +36,26 @@ class UserController {
         return new ResponseEntity<>(userService.createUser(userMapper.toEntity(userDto)), CREATED);
     }
 
+    @GetMapping("/{id}")
+    public UserDto getUserById(@PathVariable("id") Long id){
+        return userService.getUser(id).map(userMapper::toDto).get();
+    }
+
     @GetMapping("/simple")
     public List<UserSimpleView> getAllUserSimpleInformation(){
         return userService.findAllUsers().stream().map(userSimpleMapper::toDto).toList();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<UserDto> deleteUser(@PathVariable @RequestParam long id){
-        return userService.deleteUser(id).map(userMapper::toDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    @DeleteMapping("/{userId}")
+    @ResponseStatus(NO_CONTENT)
+    public ResponseEntity<Long> deleteUser(@PathVariable("userId") Long userId){
+        userService.deleteUser(userId);
+        return new ResponseEntity<>(userId, NO_CONTENT);
     }
 
-    @GetMapping("/emailInfo")
-    public List<UserEmailInfoView> getAllUsersByEmailContaining(@RequestParam String query){
-        return userService.findByEmailContaining(query).stream().map(userEmailInfoMapper::toDto).toList();
+    @GetMapping("/email")
+    public List<UserEmailInfoView> getAllUsersByEmailContaining(@RequestParam("email") String email){
+        return userService.findByEmailContaining(email).stream().map(userEmailInfoMapper::toDto).toList();
     }
 
     @GetMapping("/maxAge")
@@ -55,8 +63,8 @@ class UserController {
         return userService.findByAgeGreaterThan(maxAge).stream().map(userMapper::toDto).toList();
     }
 
-    @PutMapping("/userUpdateInfo")
-    public ResponseEntity<User> updateUserEmail(@RequestBody UserUpdateInfo userUpdateInfo){
-        return userService.updateUserEmail(userUpdateInfo.id(), userUpdateInfo.email()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody UserDto changedUser) {
+        return new ResponseEntity<>(userService.updateUser(userId, userMapper.toEntitySave(changedUser)), ACCEPTED);
     }
 }
